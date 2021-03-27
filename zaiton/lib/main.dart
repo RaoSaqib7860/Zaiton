@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zaiton/AppUtils/ZThemes.dart';
-
 import 'AppUtils/NavigationBar.dart';
+import 'AppUtils/StaticWidgets.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Zaiton',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -31,6 +32,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    StaticWidgets.gpsService(context);
+    StaticWidgets.getLocation();
+    super.initState();
+  }
+
   bool isEnable = false;
   @override
   Widget build(BuildContext context) {
@@ -86,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
             InkWell(
               onTap: () {
                 Get.to(NavigatonBar(
-                  index: 1,
+                  index: 0,
                 ));
               },
               child: FadeInUpBig(

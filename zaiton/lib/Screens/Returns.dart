@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zaiton/AppUtils/ZThemes.dart';
+import 'package:zaiton/Screens/AddReturn.dart';
+import 'package:zaiton/Screens/OutletInformition.dart';
+import 'package:zaiton/Screens/ReturnHistory.dart';
 
 class Returns extends StatefulWidget {
   Returns({Key key}) : super(key: key);
@@ -46,14 +49,34 @@ class _ReturnsState extends State<Returns> {
                     alignment: Alignment.bottomLeft,
                     child: Padding(
                       padding: EdgeInsets.only(
-                          bottom: height / 30, left: width / 10),
-                      child: Text(
-                        'Returns',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                            letterSpacing: 1,
-                            color: Colors.white),
+                          bottom: height / 30,
+                          left: width / 15,
+                          right: width / 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Returns',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                letterSpacing: 1,
+                                color: Colors.white),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.to(ReturnHistory());
+                            },
+                            child: Text(
+                              'History',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  letterSpacing: 1,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   )
@@ -67,31 +90,36 @@ class _ReturnsState extends State<Returns> {
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: Container(
-                height: height / 22,
-                width: width / 4,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.add_box_rounded,
-                      size: 13,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: width / 50,
-                    ),
-                    Text(
-                      'Return',
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ],
+              child: InkWell(
+                onTap: () {
+                  Get.to(AddReturn());
+                },
+                child: Container(
+                  height: height / 22,
+                  width: width / 4,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_box_rounded,
+                        size: 13,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: width / 50,
+                      ),
+                      Text(
+                        'Return',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
+                  margin: EdgeInsets.only(right: width / 30),
+                  decoration: BoxDecoration(
+                      color: ZThemes.appTheme,
+                      borderRadius: BorderRadius.circular(5)),
                 ),
-                margin: EdgeInsets.only(right: width / 30),
-                decoration: BoxDecoration(
-                    color: ZThemes.appTheme,
-                    borderRadius: BorderRadius.circular(5)),
               ),
             ),
             Expanded(
@@ -137,22 +165,27 @@ class _ReturnsState extends State<Returns> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  height: height / 25,
-                                  width: width / 3.6,
-                                  child: Center(
-                                    child: Text(
-                                      'View order',
-                                      style: TextStyle(
-                                          color: ZThemes.appTheme,
-                                          fontSize: 12,
-                                          letterSpacing: 0.5),
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(OutletInformition());
+                                  },
+                                  child: Container(
+                                    height: height / 25,
+                                    width: width / 3.6,
+                                    child: Center(
+                                      child: Text(
+                                        'View order',
+                                        style: TextStyle(
+                                            color: ZThemes.appTheme,
+                                            fontSize: 12,
+                                            letterSpacing: 0.5),
+                                      ),
                                     ),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                            color: ZThemes.appTheme, width: 1)),
                                   ),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                          color: ZThemes.appTheme, width: 1)),
                                 ),
                                 Text(
                                   'Outlet info',

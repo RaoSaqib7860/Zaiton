@@ -1,21 +1,22 @@
 import 'dart:async';
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:zaiton/AppUtils/ZThemes.dart';
+import 'AddOutlet.dart';
 
-class AddOutlet extends StatefulWidget {
-  AddOutlet({Key key}) : super(key: key);
+class EditOutlet extends StatefulWidget {
+  EditOutlet({Key key}) : super(key: key);
 
   @override
-  _AddOutletState createState() => _AddOutletState();
+  _EditOutletState createState() => _EditOutletState();
 }
 
-class _AddOutletState extends State<AddOutlet> {
+class _EditOutletState extends State<EditOutlet> {
   List<Marker> myMarker = [];
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   List<int> listDatas = [];
@@ -151,24 +152,29 @@ class _AddOutletState extends State<AddOutlet> {
             SizedBox(
               height: height / 50,
             ),
-            Container(
-              height: height / 4,
-              width: width,
-             child: getCurrentLocation(),
-              margin: EdgeInsets.only(left: width / 20, right: width / 20),
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 4,
-                        color: Colors.black12,
-                        offset: Offset(-5, -5)),
-                    BoxShadow(
-                        blurRadius: 4,
-                        color: Colors.black12,
-                        offset: Offset(5, 5))
-                  ],
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.blueGrey[300]),
+            InkWell(
+              onTap: () {
+                _settingModalBottomSheet(context);
+              },
+              child: Container(
+                height: height / 4,
+                width: width,
+                 child: getCurrentLocation(),
+                margin: EdgeInsets.only(left: width / 20, right: width / 20),
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 4,
+                          color: Colors.black12,
+                          offset: Offset(-5, -5)),
+                      BoxShadow(
+                          blurRadius: 4,
+                          color: Colors.black12,
+                          offset: Offset(5, 5))
+                    ],
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.blueGrey[300]),
+              ),
             ),
             SizedBox(
               height: height / 100,
@@ -258,7 +264,7 @@ class _AddOutletState extends State<AddOutlet> {
                 width: width / 3.5,
                 child: Center(
                   child: Text(
-                    'Save',
+                    'Update',
                     style: TextStyle(
                         color: Colors.white, fontSize: 14, letterSpacing: 2),
                   ),
@@ -321,80 +327,87 @@ class _AddOutletState extends State<AddOutlet> {
           }));
     });
   }
-}
 
-class TextFromFieldssForAdd extends StatefulWidget {
-  TextFromFieldssForAdd(
-      {Key key,
-      this.hint,
-      this.controller,
-      this.icon,
-      this.color,
-      this.uperhint,
-      this.obsucreTextUp = false,
-      this.isnumber = false,
-      this.enable = true,
-      this.isArabic = false,
-      this.postFixIcon})
-      : super(key: key);
-  final hint;
-  final IconData icon;
-  final TextEditingController controller;
-  final color;
-  final String uperhint;
-  final bool obsucreTextUp;
-  final bool isnumber;
-  final bool enable;
-  final bool isArabic;
-  final Widget postFixIcon;
-  @override
-  _TextFromFieldssForAddState createState() => _TextFromFieldssForAddState();
-}
-
-class _TextFromFieldssForAddState extends State<TextFromFieldssForAdd> {
-  @override
-  Widget build(BuildContext context) {
-    return FlipInY(
-      duration: Duration(seconds: 1),
-      delay: Duration(milliseconds: 500),
-      child: Padding(
-        padding: EdgeInsets.only(left: Get.width / 20, right: Get.width / 20),
-        child: TextFormField(
-          controller: widget.controller,
-          obscureText: widget.obsucreTextUp,
-          enabled: widget.enable,
-          keyboardType: widget.isnumber == true ? TextInputType.number : null,
-          style: TextStyle(color: Colors.black, fontSize: 14),
-          decoration: InputDecoration(
-              disabledBorder: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: new BorderSide(
-                    color: ZThemes.appTheme,
-                  )),
-              focusedBorder: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: new BorderSide(
-                    color: ZThemes.appTheme,
-                  )),
-              enabledBorder: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: new BorderSide(
-                    color: ZThemes.appTheme,
-                  )),
-              border: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: new BorderSide(
-                    color: ZThemes.appTheme,
-                  )),
-              contentPadding: EdgeInsets.only(left: Get.width / 20),
-              labelText: '${widget.hint}',
-              labelStyle: TextStyle(
-                  fontSize: 14,
-                  letterSpacing: 0.5,
-                  color: ZThemes.appTheme,
-                  fontWeight: FontWeight.w300)),
+  PickResult selectedPlace;
+  LatLng kInitialPosition = LatLng(-33.8567844, 151.213108);
+  void _settingModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+       backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
         ),
-      ),
-    );
+        builder: (BuildContext bc) {
+          return Column(
+            children: [
+              SizedBox(height:Get.height/30,),
+                Center(
+                child: Container(
+                  height: Get.height / 140,
+                  width: Get.width / 5,
+                  decoration: BoxDecoration(
+                      color: ZThemes.appTheme,
+                      borderRadius: BorderRadius.circular(30)),
+                ),
+              ),
+              SizedBox(
+                height: Get.height / 80,
+              ),
+              Container(
+                height: Get.height / 2,
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                child: PlacePicker(
+                  apiKey: 'AIzaSyC-ADl5riVsKPU8F9qe1jOLVQwGSdh_bOo',
+                  initialPosition: kInitialPosition,
+                  useCurrentLocation: true,
+                  selectInitialPosition: true,
+
+                  //usePlaceDetailSearch: true,
+                  onPlacePicked: (result) {
+                    selectedPlace = result;
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  },
+                  //forceSearchOnZoomChanged: true,
+                  automaticallyImplyAppBarLeading: false,
+                  //autocompleteLanguage: "ko",
+                  //region: 'au',
+                  //selectInitialPosition: true,
+                  // selectedPlaceWidgetBuilder: (_, selectedPlace, state, isSearchBarFocused) {
+                  //   print("state: $state, isSearchBarFocused: $isSearchBarFocused");
+                  //   return isSearchBarFocused
+                  //       ? Container()
+                  //       : FloatingCard(
+                  //           bottomPosition: 0.0, // MediaQuery.of(context) will cause rebuild. See MediaQuery document for the information.
+                  //           leftPosition: 0.0,
+                  //           rightPosition: 0.0,
+                  //           width: 500,
+                  //           borderRadius: BorderRadius.circular(12.0),
+                  //           child: state == SearchingState.Searching
+                  //               ? Center(child: CircularProgressIndicator())
+                  //               : RaisedButton(
+                  //                   child: Text("Pick Here"),
+                  //                   onPressed: () {
+                  //                     // IMPORTANT: You MUST manage selectedPlace data yourself as using this build will not invoke onPlacePicker as
+                  //                     //            this will override default 'Select here' Button.
+                  //                     print("do something with [selectedPlace] data");
+                  //                     Navigator.of(context).pop();
+                  //                   },
+                  //                 ),
+                  //         );
+                  // },
+                  // pinBuilder: (context, state) {
+                  //   if (state == PinState.Idle) {
+                  //     return Icon(Icons.favorite_border);
+                  //   } else {
+                  //     return Icon(Icons.favorite);
+                  //   }
+                  // },
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

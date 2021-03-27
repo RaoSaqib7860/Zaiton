@@ -1,38 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zaiton/AppUtils/ZThemes.dart';
-import 'package:zaiton/Screens/AddOrder.dart';
-import 'package:zaiton/Screens/OrderHistory.dart';
 
-class Order extends StatefulWidget {
-  Order({Key key}) : super(key: key);
+class ReturnHistory extends StatefulWidget {
+  ReturnHistory({Key key}) : super(key: key);
 
   @override
-  _OrderState createState() => _OrderState();
+  _ReturnHistoryState createState() => _ReturnHistoryState();
 }
 
-class _OrderState extends State<Order> {
-  List list = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-    '13'
-  ];
+class _ReturnHistoryState extends State<ReturnHistory> {
+  List list = [1, 2, 3, 4, 5, 6];
   @override
   Widget build(BuildContext context) {
     var height = Get.height;
     var width = Get.width;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -40,105 +22,98 @@ class _OrderState extends State<Order> {
         width: width,
         child: Column(
           children: [
-            Container(
-              height: height / 3.5,
-              child: Stack(
-                children: [
-                  Align(
+            Stack(
+              children: [
+                Container(
+                    height: height / 3.6,
+                    width: width,
+                    child: Image.asset(
+                      'assets/img3.jpg',
+                      fit: BoxFit.cover,
+                    )),
+                Container(
+                  height: height / 3.6,
+                  width: width,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                        ZThemes.appTheme,
+                        Colors.black.withOpacity(0),
+                        Colors.black.withOpacity(0)
+                      ])),
+                ),
+                Container(
+                  height: height / 3.6,
+                  width: width,
+                  child: Align(
                     alignment: Alignment.bottomLeft,
                     child: Padding(
                       padding: EdgeInsets.only(
-                          bottom: height / 30,
-                          left: width / 15,
-                          right: width / 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Orders',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                                letterSpacing: 1,
-                                color: Colors.white),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.to(OrderHistory());
-                            },
-                            child: Text(
-                              'History',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  letterSpacing: 1,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ],
+                          bottom: height / 30, left: width / 10),
+                      child: Text(
+                        'Return History',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                            letterSpacing: 1,
+                            color: Colors.white),
                       ),
                     ),
-                  )
-                ],
-              ),
-              width: width,
-              decoration: BoxDecoration(color: ZThemes.appTheme),
+                  ),
+                )
+              ],
             ),
             SizedBox(
               height: height / 50,
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: InkWell(
-                onTap: () {
-                  Get.to(AddOrder());
-                },
-                child: Container(
-                  height: height / 22,
-                  width: width / 4,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_box_rounded,
-                        size: 13,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: width / 50,
-                      ),
-                      Text(
-                        'Add Order',
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
+            Container(
+              height: height / 16,
+              width: width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '  Outlet info',
+                    style: TextStyle(color: ZThemes.darkTheme, fontSize: 13),
                   ),
-                  margin: EdgeInsets.only(right: width / 30),
-                  decoration: BoxDecoration(
-                      color: ZThemes.appTheme,
-                      borderRadius: BorderRadius.circular(5)),
-                ),
+                  Text(
+                    'Order',
+                    style: TextStyle(color: ZThemes.darkTheme, fontSize: 13),
+                  ),
+                  Text(
+                    'Return  ',
+                    style: TextStyle(color: ZThemes.darkTheme, fontSize: 13),
+                  ),
+                ],
               ),
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                    blurRadius: 4,
+                    color: Colors.black12,
+                    offset: Offset(-1, -1)),
+                BoxShadow(
+                    blurRadius: 4, color: Colors.black12, offset: Offset(2, 3))
+              ], color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              margin: EdgeInsets.only(left: width / 20, right: width / 20),
             ),
             Expanded(
                 child: ListView.builder(
               physics: BouncingScrollPhysics(),
               itemBuilder: (c, i) {
-                return Padding(
-                  padding: EdgeInsets.only(left: width / 20, right: width / 20),
+                return Container(
+                  padding: EdgeInsets.only(
+                      left: width / 20, right: width / 20, bottom: height / 40),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: height / 50,
-                      ),
                       Container(
                         height: height / 6.5,
                         width: width,
                         padding: EdgeInsets.only(
-                            right: width / 20,
-                            left: width / 20,
-                            top: height / 50),
+                          right: width / 20,
+                          left: width / 20,
+                        ),
                         child: Column(
                           children: [
                             Text(
@@ -209,7 +184,31 @@ class _OrderState extends State<Order> {
                 );
               },
               itemCount: list.length,
-            ))
+            )),
+            SizedBox(
+              height: height / 30,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                margin: EdgeInsets.only(left: width / 20),
+                height: height / 20,
+                width: width / 3.5,
+                child: Center(
+                  child: Text(
+                    'Return',
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 14, letterSpacing: 2),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: ZThemes.appTheme,
+                    borderRadius: BorderRadius.circular(8)),
+              ),
+            ),
+            SizedBox(
+              height: height / 30,
+            ),
           ],
         ),
       ),

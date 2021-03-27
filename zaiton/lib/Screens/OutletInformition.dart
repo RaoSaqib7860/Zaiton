@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,15 +6,16 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:zaiton/AppUtils/ZThemes.dart';
+import 'package:zaiton/Screens/EditOutlet.dart';
 
-class AddOutlet extends StatefulWidget {
-  AddOutlet({Key key}) : super(key: key);
+class OutletInformition extends StatefulWidget {
+  OutletInformition({Key key}) : super(key: key);
 
   @override
-  _AddOutletState createState() => _AddOutletState();
+  _OutletInformitionState createState() => _OutletInformitionState();
 }
 
-class _AddOutletState extends State<AddOutlet> {
+class _OutletInformitionState extends State<OutletInformition> {
   List<Marker> myMarker = [];
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   List<int> listDatas = [];
@@ -99,7 +99,7 @@ class _AddOutletState extends State<AddOutlet> {
     var width = Get.width;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: ZThemes.offGrey,
       body: Container(
         height: height,
         width: width,
@@ -136,7 +136,7 @@ class _AddOutletState extends State<AddOutlet> {
                       padding: EdgeInsets.only(
                           bottom: height / 30, left: width / 10),
                       child: Text(
-                        'Add Outlet',
+                        'Osama General store',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -152,9 +152,42 @@ class _AddOutletState extends State<AddOutlet> {
               height: height / 50,
             ),
             Container(
+              height: height / 16,
+              width: width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '  Outlet info',
+                    style: TextStyle(color: ZThemes.darkTheme, fontSize: 13),
+                  ),
+                  Text(
+                    'Order',
+                    style: TextStyle(color: ZThemes.darkTheme, fontSize: 13),
+                  ),
+                  Text(
+                    'Return  ',
+                    style: TextStyle(color: ZThemes.darkTheme, fontSize: 13),
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                    blurRadius: 4,
+                    color: Colors.black12,
+                    offset: Offset(-1, -1)),
+                BoxShadow(
+                    blurRadius: 4, color: Colors.black12, offset: Offset(2, 3))
+              ], color: Colors.white, borderRadius: BorderRadius.circular(10)),
+              margin: EdgeInsets.only(left: width / 20, right: width / 20),
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            Container(
               height: height / 4,
               width: width,
-             child: getCurrentLocation(),
+              child: getCurrentLocation(),
               margin: EdgeInsets.only(left: width / 20, right: width / 20),
               decoration: BoxDecoration(
                   boxShadow: [
@@ -189,84 +222,164 @@ class _AddOutletState extends State<AddOutlet> {
             SizedBox(
               height: height / 50,
             ),
-            TextFromFieldssForAdd(
-                color: Colors.white,
-                hint: 'Outlet Name'.tr,
-                obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
+            InformationText(
+              title: 'Outlet Name',
+              description: 'Osman general store',
             ),
-            TextFromFieldssForAdd(
-                color: Colors.white, hint: 'Address'.tr, obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white,
-                hint: 'Outlet Type'.tr,
-                obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white,
-                hint: 'Owner Name'.tr,
-                obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white, hint: 'City'.tr, obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white, hint: 'Phone'.tr, obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white, hint: 'Email'.tr, obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white, hint: 'Zone'.tr, obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white, hint: 'Sub Zone'.tr, obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white, hint: 'Area'.tr, obsucreTextUp: false),
-            SizedBox(
-              height: height / 80,
-            ),
-            TextFromFieldssForAdd(
-                color: Colors.white, hint: 'Sub Area'.tr, obsucreTextUp: false),
             SizedBox(
               height: height / 50,
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: width / 20),
-                height: height / 20,
-                width: width / 3.5,
-                child: Center(
-                  child: Text(
-                    'Save',
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 14, letterSpacing: 2),
+            InformationText(
+              title: 'Address',
+              description: 'Block_3 street 11 islamabad',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'Outlet Type',
+              description: 'Outlet Type',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'Owner Name',
+              description: 'Abuzar',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'City',
+              description: 'Islamabad',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'Phone',
+              description: '123456789',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'Email',
+              description: 'example@gmail.com',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'Zone',
+              description: 'Zone',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'Sub Zone',
+              description: 'Sub Zone',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'Area',
+              description: 'Area',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            InformationText(
+              title: 'Sub Area',
+              description: 'Sub Area',
+            ),
+            SizedBox(
+              height: height / 50,
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: width / 20),
+                  height: height / 20,
+                  width: width / 4,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_box_rounded,
+                        size: 15,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: width / 50,
+                      ),
+                      Text(
+                        'Order',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            letterSpacing: 1),
+                      ),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      color: ZThemes.appTheme,
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: width / 20),
+                  height: height / 20,
+                  width: width / 4,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_box_rounded,
+                        size: 15,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: width / 50,
+                      ),
+                      Text(
+                        'Return',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            letterSpacing: 1),
+                      ),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      color: ZThemes.appTheme,
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.to(EditOutlet());
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: width / 20),
+                    height: height / 20,
+                    width: width / 4,
+                    child: Center(
+                      child: Text(
+                        'Edit Order',
+                        style: TextStyle(
+                            color: ZThemes.appTheme,
+                            fontSize: 12,
+                            letterSpacing: 1),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: ZThemes.appTheme),
+                        borderRadius: BorderRadius.circular(8)),
                   ),
                 ),
-                decoration: BoxDecoration(
-                    color: ZThemes.appTheme,
-                    borderRadius: BorderRadius.circular(8)),
-              ),
+              ],
             ),
             SizedBox(
               height: height / 50,
@@ -323,77 +436,48 @@ class _AddOutletState extends State<AddOutlet> {
   }
 }
 
-class TextFromFieldssForAdd extends StatefulWidget {
-  TextFromFieldssForAdd(
-      {Key key,
-      this.hint,
-      this.controller,
-      this.icon,
-      this.color,
-      this.uperhint,
-      this.obsucreTextUp = false,
-      this.isnumber = false,
-      this.enable = true,
-      this.isArabic = false,
-      this.postFixIcon})
-      : super(key: key);
-  final hint;
-  final IconData icon;
-  final TextEditingController controller;
-  final color;
-  final String uperhint;
-  final bool obsucreTextUp;
-  final bool isnumber;
-  final bool enable;
-  final bool isArabic;
-  final Widget postFixIcon;
+class InformationText extends StatefulWidget {
+  final String title;
+  final String description;
+  InformationText({Key key, this.title, this.description}) : super(key: key);
+
   @override
-  _TextFromFieldssForAddState createState() => _TextFromFieldssForAddState();
+  _InformationTextState createState() => _InformationTextState();
 }
 
-class _TextFromFieldssForAddState extends State<TextFromFieldssForAdd> {
+class _InformationTextState extends State<InformationText> {
   @override
   Widget build(BuildContext context) {
-    return FlipInY(
-      duration: Duration(seconds: 1),
-      delay: Duration(milliseconds: 500),
-      child: Padding(
-        padding: EdgeInsets.only(left: Get.width / 20, right: Get.width / 20),
-        child: TextFormField(
-          controller: widget.controller,
-          obscureText: widget.obsucreTextUp,
-          enabled: widget.enable,
-          keyboardType: widget.isnumber == true ? TextInputType.number : null,
-          style: TextStyle(color: Colors.black, fontSize: 14),
-          decoration: InputDecoration(
-              disabledBorder: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: new BorderSide(
-                    color: ZThemes.appTheme,
-                  )),
-              focusedBorder: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: new BorderSide(
-                    color: ZThemes.appTheme,
-                  )),
-              enabledBorder: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: new BorderSide(
-                    color: ZThemes.appTheme,
-                  )),
-              border: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: new BorderSide(
-                    color: ZThemes.appTheme,
-                  )),
-              contentPadding: EdgeInsets.only(left: Get.width / 20),
-              labelText: '${widget.hint}',
-              labelStyle: TextStyle(
-                  fontSize: 14,
-                  letterSpacing: 0.5,
-                  color: ZThemes.appTheme,
-                  fontWeight: FontWeight.w300)),
-        ),
+    var height = Get.height;
+    var width = Get.width;
+    return Padding(
+      padding: EdgeInsets.only(left: width / 20, right: width / 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${widget.title}',
+            style: TextStyle(color: ZThemes.darkTheme, fontSize: 11),
+          ),
+          SizedBox(
+            height: height / 150,
+          ),
+          Text(
+            '${widget.description}',
+            style: TextStyle(
+              color: ZThemes.appTheme,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(
+            height: height / 100,
+          ),
+          Container(
+            width: width,
+            height: 1,
+            color: Colors.blueGrey[100],
+          )
+        ],
       ),
     );
   }

@@ -7,7 +7,7 @@
         android:label="zaiton"
         android:icon="@mipmap/ic_launcher">
          <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCJB4gEXI-RhqJnb87-fhCUiSLFfRWF8yw"/>
+               android:value="AIzaSyC-ADl5riVsKPU8F9qe1jOLVQwGSdh_bOo"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

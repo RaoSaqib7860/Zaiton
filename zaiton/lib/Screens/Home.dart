@@ -68,7 +68,7 @@ class _MapCalssState extends State<MapCalss> {
           margin: EdgeInsets.only(bottom: height / 12),
           decoration: BoxDecoration(color: Colors.yellow),
           child: PlacePicker(
-            apiKey: 'AIzaSyALR9gN0-BPRis8ZMG2bkyECkAotx5aVlo',
+            apiKey: 'AIzaSyC-ADl5riVsKPU8F9qe1jOLVQwGSdh_bOo',
             initialPosition: kInitialPosition,
             useCurrentLocation: true,
             selectInitialPosition: true,
