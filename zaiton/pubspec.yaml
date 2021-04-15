@@ -35,6 +35,8 @@ dependencies:
   geolocator: 
   google_maps_flutter:
   intl: ^0.17.0
+  multi_image_picker: ^4.8.0
+  carousel_slider:
 
 dev_dependencies:
   flutter_test:

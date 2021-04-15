@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:zaiton/AppUtils/CarasolText.dart';
 import 'package:zaiton/AppUtils/ZThemes.dart';
 import 'AddOutlet.dart';
 
@@ -17,6 +19,56 @@ class EditOutlet extends StatefulWidget {
 }
 
 class _EditOutletState extends State<EditOutlet> {
+  List<Asset> images = <Asset>[];
+  String _error = 'No Error Dectected';
+
+  Widget buildGridView() {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(images.length, (index) {
+        Asset asset = images[index];
+        return AssetThumb(
+          asset: asset,
+          width: 300,
+          height: 300,
+        );
+      }),
+    );
+  }
+
+  Future<void> loadAssets() async {
+    List<Asset> resultList = <Asset>[];
+    String error = 'No Error Detected';
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 300,
+        enableCamera: true,
+        selectedAssets: images,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        materialOptions: MaterialOptions(
+          actionBarColor: "#abcdef",
+          actionBarTitle: "Example App",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#000000",
+        ),
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      images = resultList;
+      _error = error;
+    });
+  }
+
   List<Marker> myMarker = [];
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   List<int> listDatas = [];
@@ -111,13 +163,25 @@ class _EditOutletState extends State<EditOutlet> {
                 Container(
                     height: height / 3.6,
                     width: width,
-                    child: Image.asset(
-                      'assets/img3.jpg',
-                      fit: BoxFit.cover,
-                    )),
+                    child: images.isNotEmpty
+                        ? CarasolSliders(
+                            list: images,
+                          )
+                        : Image.asset(
+                            'assets/img3.jpg',
+                            fit: BoxFit.cover,
+                          )),
                 Container(
                   height: height / 3.6,
                   width: width,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: IconButton(
+                        icon: Icon(Icons.camera_alt, color: Colors.white),
+                        onPressed: () {
+                          loadAssets();
+                        }),
+                  ),
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           begin: Alignment.bottomCenter,
@@ -137,7 +201,7 @@ class _EditOutletState extends State<EditOutlet> {
                       padding: EdgeInsets.only(
                           bottom: height / 30, left: width / 10),
                       child: Text(
-                        'Add Outlet',
+                        'Edit Outlet',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -159,7 +223,7 @@ class _EditOutletState extends State<EditOutlet> {
               child: Container(
                 height: height / 4,
                 width: width,
-                 child: getCurrentLocation(),
+                child: getCurrentLocation(),
                 margin: EdgeInsets.only(left: width / 20, right: width / 20),
                 decoration: BoxDecoration(
                     boxShadow: [
@@ -333,7 +397,7 @@ class _EditOutletState extends State<EditOutlet> {
   void _settingModalBottomSheet(context) {
     showModalBottomSheet(
         context: context,
-       backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
@@ -341,8 +405,10 @@ class _EditOutletState extends State<EditOutlet> {
         builder: (BuildContext bc) {
           return Column(
             children: [
-              SizedBox(height:Get.height/30,),
-                Center(
+              SizedBox(
+                height: Get.height / 30,
+              ),
+              Center(
                 child: Container(
                   height: Get.height / 140,
                   width: Get.width / 5,
@@ -356,7 +422,8 @@ class _EditOutletState extends State<EditOutlet> {
               ),
               Container(
                 height: Get.height / 2,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(30)),
                 child: PlacePicker(
                   apiKey: 'AIzaSyC-ADl5riVsKPU8F9qe1jOLVQwGSdh_bOo',
                   initialPosition: kInitialPosition,
